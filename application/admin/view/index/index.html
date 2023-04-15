@@ -1,0 +1,748 @@
+{include file="common/all" /}
+<div class="main-panel">
+    <!-- BEGIN : Main Content-->
+    <div class="main-content">
+        <div class="content-wrapper"><!-- Minimal statistics section start -->
+            <section id="minimal-statistics">
+                <div class="row">
+                    {if authCheck('index/shua',$roleid) && authCheck('index/shua2',$roleid)}
+                        <button type="button" style="margin-top: 20px;margin-left: 20px;" class="btn btn-raised btn-secondary btn-min-width mr-1 mb-1" onclick="shuahao('1')">刷号</button>
+                    {/if}
+                    <div class="col-12 mt-3 mb-1">
+                        <div class="content-header">Statistics</div>
+                    </div>
+                </div>
+
+                {if authCheck('index/indextj',$roleid)}
+                <div class="row" matchHeight="card">
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.jiekou} 次</h3>
+                                            <span>今日接口调用次数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <a href="/sun_admin/user_online">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 success">{$data.huoyue} 人</h3>
+                                            <span>今日活跃用户</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-user success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <a href="/sun_admin/user_online">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 success">{$data.huoyue_user_renwu} 人</h3>
+                                            <span>今日完成任务人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-user success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <a href="/sun_admin/user">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 success">{$data.one_user} 人</h3>
+                                            <span>今日新增人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-user success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 success">{$data.one_order} 元</h3>
+                                            <span>今日收益</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-user success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 success">{$data.all_order} 元</h3>
+                                            <span>总收益</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-user success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 success">{$data.all_gongyi_price} 元</h3>
+                                            <span>总满座公益</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-user success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" matchHeight="card">
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <a href="/sun_admin/user">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 warning">{$data.all_user} 人</h3>
+                                            <span>总人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-users success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 mb-0">
+                                        <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <a href="/sun_admin/user">
+                                        <div class="media">
+                                            <div class="media-body text-left">
+                                                <h3 class="mb-1 warning">{$data.real_ren} 人</h3>
+                                                <span>总实名人数</span>
+                                            </div>
+                                            <div class="media-right align-self-center">
+                                                <i class="icon-users success font-large-2 float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 mb-0">
+                                            <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <a href="/sun_admin/user">
+                                        <div class="media">
+                                            <div class="media-body text-left">
+                                                <h3 class="mb-1 warning">{$data.day_real_ren} 人</h3>
+                                                <span>今日实名人数</span>
+                                            </div>
+                                            <div class="media-right align-self-center">
+                                                <i class="icon-users success font-large-2 float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 mb-0">
+                                            <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" matchHeight="card">
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+
+                                        <div class="media">
+                                            <div class="media-body text-left">
+                                                <h3 class="mb-1 warning">{$data.tj_user_pumna_all_price}</h3>
+                                                <span>总扑满</span>
+                                            </div>
+                                            <div class="media-right align-self-center">
+                                                <i class="icon-users success font-large-2 float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 mb-0">
+                                            <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                        <div class="media">
+                                            <div class="media-body text-left">
+                                                <h3 class="mb-1 warning">{$data.tj_user_yingpiao_all_price}</h3>
+                                                <span>总影票</span>
+                                            </div>
+                                            <div class="media-right align-self-center">
+                                                <i class="icon-users success font-large-2 float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 mb-0">
+                                            <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+
+                                        <div class="media">
+                                            <div class="media-body text-left">
+                                                <h3 class="mb-1 warning">{$data.tj_user_tz_all_price} 人</h3>
+                                                <span>总通证</span>
+                                            </div>
+                                            <div class="media-right align-self-center">
+                                                <i class="icon-users success font-large-2 float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 mb-0">
+                                            <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" matchHeight="card">
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_offline_all_num} </h3>
+                                            <span>总入驻商家</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_offline_day_num} </h3>
+                                            <span>今日入驻商家</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_offline_yesterday_num} </h3>
+                                            <span>昨日入驻商家</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_offline_yue_num} </h3>
+                                            <span>本月入驻商家</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_offline_yue_top_num} </h3>
+                                            <span>上月入驻商家</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" matchHeight="card">
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_yesterday_num} </h3>
+                                            <span>昨日新增人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" matchHeight="card">
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_alipay_all_num} </h3>
+                                            <span>总支付宝开通VIP人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_alipay_day_num} </h3>
+                                            <span>今日支付宝开通VIP人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_alipay_yesterday_num} </h3>
+                                            <span>昨日支付宝开通VIP人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_alipay_all_price} </h3>
+                                            <span>总支付宝开通VIP金额</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_alipay_day_price} </h3>
+                                            <span>今日支付宝开通VIP金额</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_alipay_yesterday_price} </h3>
+                                            <span>昨日支付宝开通VIP金额</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_tz_all_num} </h3>
+                                            <span>总通证开通VIP人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_tz_day_num} </h3>
+                                            <span>今日通证开通VIP人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_tz_yesterday_num} </h3>
+                                            <span>昨日通证开通VIP人数</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_tz_all_price} </h3>
+                                            <span>总通证开通VIP金额</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_tz_day_price} </h3>
+                                            <span>今日通证开通VIP金额</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 danger">{$data.tj_user_vip_tz_yesterday_price} </h3>
+                                            <span>昨日通证开通VIP金额</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-list danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" matchHeight="card">
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 warning">{$data.tj_user_hongbao_tz_all_price}</h3>
+                                            <span>总通证-红包</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-users success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 mb-0">
+                                        <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 warning">{$data.tj_user_hongbao_pumna_all_price}</h3>
+                                            <span>总铺满-红包</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-users success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 mb-0">
+                                        <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 warning">{$data.tj_user_hongbao_tz_day_price}</h3>
+                                            <span>今日通证-红包</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-users success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 mb-0">
+                                        <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="px-3 py-3">
+
+                                    <div class="media">
+                                        <div class="media-body text-left">
+                                            <h3 class="mb-1 warning">{$data.tj_user_hongbao_pumna_day_price}</h3>
+                                            <span>今日扑满-红包</span>
+                                        </div>
+                                        <div class="media-right align-self-center">
+                                            <i class="icon-users success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 mb-0">
+                                        <ngb-progressbar type="warning" [value]="35" class="progress-bar-sm"></ngb-progressbar>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/if}
+
+            </section>
+        </div>
+    </div>
+</div>
+{include file="common/right" /}
+
+
+
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+
+<script>
+    function shuahao(type)
+    {
+        var url = '';
+        if(type == 1)
+        {
+            url = '/sun_admin/shua';
+        }else{
+            url = '/sun_admin/shua2';
+        }
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: '刷号',
+                maxmin: true,
+                area: ['80%', '80%'],
+                content: url,
+            });
+        });
+    }
+    function add()
+    {
+        layer.ready(function () {
+            layer.open({
+                type: 2,
+                title: 'Add Platform Push',
+                maxmin: true,
+                area: ['800px', '600px'],
+                content: '/sun_admin/push_add',
+                shadeClose:true,
+                shade:0.5,
+                end:function(){
+                    location.reload();
+                }
+            });
+        });
+    }
+</script>
+</body>
+<!-- END : Body-->
+</html>

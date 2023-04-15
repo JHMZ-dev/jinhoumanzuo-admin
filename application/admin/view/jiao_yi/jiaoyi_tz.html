@@ -1,0 +1,207 @@
+{include file="common/all" /}
+<style>
+    /*分页*/
+    .pagination {margin-left: 8.5rem;}
+    .pagination li {display: inline-block;margin-right: -1px;padding: 13px;border: 1px solid #e2e2e2;min-width: 20px;text-align: center;width: 100px;height: 50px;}
+    .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+    .pagination li a {display: block;text-align: center;}
+</style>
+<div class="main-panel">
+    <!-- BEGIN : Main Content-->
+    <div class="main-content">
+        <div class="content-wrapper"><!--Extended Table starts-->
+            <section id="extended">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <form action="/sun_admin/jiaoyi_tz" role="search" class="navbar-form navbar mt-1" style="float: left !important;margin-left: 100px;" name="form1" id="form1">
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <select class="form-control" name="cont_type">
+                                            <option value="0">请选择</option>
+                                            <option value="1">发布者id/手机号</option>
+                                            <option value="2">兑换者id/手机号</option>
+                                            <option value="3">订单号</option>
+                                        </select>
+                                    </div>
+                                    <div class="position-relative has-icon-right">
+                                        <input type="text" placeholder="Search" class="form-control" name="cont"/>
+                                    </div>
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <select class="form-control" name="type">
+                                            <option value="0">类型</option>
+                                            <option value="1">上架中</option>
+                                            <option value="3">已取消</option>
+                                            <option value="4">已完成</option>
+                                        </select>
+                                    </div>
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <select class="form-control" name="paixu">
+                                            <option value="">请选择排序</option>
+                                            {volist name="paixu" id="paixus"}
+                                            <option value="{$i}">{$paixus}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <button type="button" style="margin-top: 4px;" class="btn btn-raised btn-secondary btn-min-width mr-1 mb-1" onclick="document.getElementById('form1').submit();">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body table-responsive">
+                                    <table class="table text-center">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 10rem;">订单号</th>
+                                            <th style="width: 10rem;">发布者id</th>
+                                            <th style="width: 10rem;">兑换者id</th>
+                                            <th style="width: 6rem;">订单状态</th>
+                                            <th style="width: 6rem;">通证数量</th>
+                                            <th style="width: 6rem;">扑满数量</th>
+                                            <th>上架时间</th>
+                                            <th>交易时间</th>
+                                            <th>取消时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="order" id="orders"}
+                                        <tr>
+                                            <td>{$orders.order_sn}</td>
+                                            <td>
+                                                {if condition="$orders['user_id'] >0"}
+                                                 {$orders.user_id}
+                                                {$orders['user_mobile']}
+                                                {/if}
+                                            </td>
+                                            <td>
+                                                {if condition="$orders['to_id'] >0"}
+                                                  {$orders.to_id}
+                                                {$orders['to_mobile']}
+                                                {/if}
+                                            </td>
+                                            <td>
+                                                {if $orders.types == '已完成'}
+                                                    <span class="greentext">{$orders.types}</span>
+                                                {/if}
+                                                {if $orders.types == '已取消'}
+                                                    <span class="red">{$orders.types}</span>
+                                                {/if}
+                                                {if $orders.types == '上架中'}
+                                                    <span>{$orders.types}</span>
+                                                {/if}
+                                            </td>
+                                            <td>{$orders.tz_num}</td>
+                                            <td>{$orders.pm_num}</td>
+                                            <td>{$orders.time}</td>
+                                            <td>{$orders.ok_time}</td>
+                                            <td>{$orders.off_time}</td>
+                                            <td>
+                                                {if condition="$orders['type'] == 1"}
+                                                <button type="button" class="btn btn-raised btn-icon btn-danger mr-1" onclick="auth_no2('{$orders.jiaoyi_tz_id}')"><i class="fa fa-times"></i></button>
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                    {$show}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--Extended Table Ends-->
+        </div>
+    </div>
+    <!-- END : End Main Content-->
+</div>
+</div>
+
+{include file="common/right" /}
+
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN APEX JS-->
+<script src="http://img.lll1.vip/apex-assets/js/app-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/notification-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/customizer.js" type="text/javascript"></script>
+<!-- END APEX JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<!-- END PAGE LEVEL JS-->
+<script>
+    //查看用户信息
+    function userinfo(id)
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: '查询用户信息',
+                maxmin: true,
+                area: ['80%', '80%'],
+                content: '/sun_admin/get_user_info?id='+id,
+            });
+        });
+    }
+
+    //quxiao
+    function auth_no2(id)
+    {
+        swal({
+            title: '强制取消',
+            text: '是否确定强制取消？',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0CC27E',
+            cancelButtonColor: '#FF586B',
+            confirmButtonText: '是',
+            cancelButtonText: "否"
+        }).then(function (isConfirm) {
+            // isConfirm 返回结果true和false
+            if (isConfirm) {
+                $.ajax({
+                    type: 'post',
+                    url: '/sun_admin/jiaoyi_quxiao',
+                    dataType: 'json',
+                    data: {"id":id,"type":1},
+                    success: function(res){
+                        if(res.status == '200')
+                        {
+                            swal(
+                                res.msg,
+                                '',
+                                'success'
+                            );
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1800);
+                        }else{
+                            swal(
+                                res.msg,
+                                '',
+                                'error'
+                            );
+                        }
+                    },
+                });
+            }
+        }).catch(swal.noop);
+    }
+</script>
+</body>
+<!-- END : Body-->
+</html>

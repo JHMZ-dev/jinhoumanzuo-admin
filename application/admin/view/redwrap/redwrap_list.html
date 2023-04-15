@@ -1,0 +1,303 @@
+{include file="common/all" /}
+<style>
+    /*分页*/
+    .pagination {margin-left: 8.5rem;}
+    .pagination li {display: inline-block;margin-right: -1px;padding: 13px;border: 1px solid #e2e2e2;min-width: 20px;text-align: center;width: 100px;height: 50px;}
+    .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+    .pagination li a {display: block;text-align: center;}
+
+    /*.swal2-show{width:90% !important;}*/
+</style>
+<div class="main-panel">
+    <!-- BEGIN : Main Content-->
+    <div class="main-content">
+        <div class="content-wrapper"><!--Extended Table starts-->
+            <section id="extended">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <div>
+
+                                </div>
+                                <form action="" role="search" class="navbar-form navbar mt-1" style="float: left !important;margin-left: 100px;" name="form1" id="form1">
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <select class="form-control" name="cont_type">
+                                            <option value="0">请选择</option>
+                                            <option value="1">序号</option>
+                                            <option value="2">发出用户ID</option>
+                                            <option value="3">接收用户ID</option>
+                                        </select>
+                                    </div>
+                                    <div class="position-relative has-icon-right">
+                                        <input type="text" placeholder="Search" class="form-control" name="cont"/>
+                                    </div>
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <select class="form-control" name="type">
+                                            <option value="0">请选择</option>
+                                            <option value="1">展示中</option>
+                                            <option value="2">已领完</option>
+                                            <option value="4">申述中</option>
+                                            <option value="5">后台发放</option>
+                                            <option value="6">后台驳回</option>
+                                        </select>
+                                    </div>
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <select class="form-control" name="status">
+                                            <option value="0">请选择</option>
+                                            <option value="1">通证红包</option>
+                                            <option value="2">扑满红包</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <button type="button" style="margin-top: 4px;" class="btn btn-raised btn-secondary btn-min-width mr-1 mb-1" onclick="document.getElementById('form1').submit();">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body table-responsive">
+                                    <table class="table text-center">
+                                        <thead>
+                                        <tr>
+<!--                                            <th style="width: 5rem;"></th>-->
+                                            <th style="">序号</th>
+                                            <th style="">发放用户</th>
+                                            <th style="">接收用户</th>
+                                            <th style="">金额</th>
+                                            <th style="">类型</th>
+                                            <th style="">状态</th>
+                                            <th style="">创建时间</th>
+                                            <th style="">完成时间</th>
+                                            <th style="">备注</th>
+                                            <th style="">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="order" id="lists"}
+                                        <tr>
+<!--                                            <td>-->
+<!--                                                <input type="checkbox" name="ck" value="{$lists.redwrap_out_id}" style="width:15px;height:15px;"/>-->
+<!--                                            </td>-->
+                                            <td>{$lists.redwrap_out_id}</td>
+                                            <td>  {$lists.user_id} </td>
+                                            <td>  {$lists.redwrap_user_id} </td>
+
+                                            <td>{$lists.money}</td>
+                                            <td>
+                                                {if $lists.class == 1}
+                                                    通证红包
+                                                {/if}
+                                                {if $lists.class == 2}
+                                                    扑满红包
+                                                {/if}
+                                            </td>
+                                            <td>
+                                                {if $lists.status == 1}
+                                                    <span class="">展示中</span>
+                                                {/if}
+                                                {if $lists.status == 2}
+                                                    <span class="greentext">已发放</span>
+                                                {/if}
+                                                {if $lists.status == 4}
+                                                    <span class="red">申述中</span>
+                                                {/if}
+                                                {if $lists.status == 5}
+                                                    <span class="greentext">处理成功</span>
+                                                {/if}
+                                                {if $lists.status == 6}
+                                                <span style="color:orange;">处理退回</span>
+                                                {/if}
+                                            </td>
+                                            <td>{$lists.time}</td>
+                                            <td>{$lists.time_over}</td>
+                                            <td>{$lists.cont}</td>
+
+                                            <td>
+                                                {if $lists.status == '1' || $lists.status == '4'}
+                                                    <button type="button" class="btn btn-raised btn-icon btn-success mr-1" onclick="chuli_data('{$lists.redwrap_out_id}',1)">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-raised btn-icon btn-danger mr-1" onclick="chuli_data('{$lists.redwrap_out_id}',2)">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+<!--                                    -->
+<!--                                    <button type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="allcheck();">全选</button>-->
+<!--                                    <button type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="allnotcheck();">全不选</button>-->
+<!--                                    <button type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="backcheck();">反选</button>-->
+<!--                                    <button type="button" class="btn btn-raised btn-icon btn-success mr-1" onclick="orderExcel_out()"><i class="fa fa-check">导出</i></button>-->
+<!--                                    -->
+                                    {$show}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--Extended Table Ends-->
+        </div>
+    </div>
+    <!-- END : End Main Content-->
+</div>
+</div>
+
+{include file="common/right" /}
+
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+
+
+<script>
+    //查看用户信息
+    function userinfo(id)
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: '查看用户信息',
+                maxmin: true,
+                area: ['80%', '80%'],
+                content: '/sun_admin/get_user_info?id='+id,
+                shadeClose:true,
+                shade:0.5,
+                end:function(){
+                    location.reload();
+                }
+            });
+        });
+    }
+
+    //处理
+    function chuli_data(id,type)
+    {
+        swal({
+            title: "内容",
+            text: "请输入内容：",
+            input: "text",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "Write something"
+        }).then(function (inputValue) {
+            if (inputValue === "")
+            {
+                swal(
+                    '请输入原因',
+                    '',
+                    'error'
+                );
+                return false
+            }else{
+                $.ajax({
+                    type: 'post',
+                    url: '/sun_admin/redwrap_edit',
+                    dataType: 'json',
+                    data: {"id":id,"cont":inputValue,"type":type},
+                    success: function(res)
+                    {
+                        if(res.status == '200')
+                        {
+                            swal(
+                                res.msg,
+                                '',
+                                'success'
+                            );
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1800);
+                        }else{
+                            swal(
+                                res.msg,
+                                '',
+                                'error'
+                            );
+                        }
+                    },
+                });
+            }
+        });
+    }
+
+
+    //导出订单
+    function orderExcel_out(){
+
+        var f = false;
+        //得到要删除的主键id
+        var arr = []; //用于存要删除的选中的id值
+        var ck = document.getElementsByName("ck"); //得到一组checkbox  相当于数组
+        //循环这一组checkbox让每一个checkbox选中
+        for (var i = 0; i < ck.length; i++) {
+            if (ck[i].checked == true) { //代表选中
+                arr.push(ck[i].value);
+                f = true;
+            }
+        }
+        if (f == true) {
+            swal({
+                title:'确定导出',
+                text:'是否确定导出当前订单？',
+                type:'warning',
+                showCancelButton:true,
+                confirmButtonColor:'#0CC27E',
+                cancelButtonColor:'#FF586B',
+                confirmButtonText:'是',
+                cancelButtonText:"否"
+            }).then(function(isConfirm){
+                //isConfirm返回结果true和false
+                if(isConfirm){
+                    $.ajax({
+                        type: 'post',
+                        url: '/sun_admin/out_tz_hs_list',
+                        dataType: 'json',
+                        data: {"arr":arr,"caozuo":'yes',"tt":"1"},
+                        success: function(res){
+                            if(res.status == '200')
+                            {
+                                swal(
+                                    res.msg,
+                                    '',
+                                    'success'
+                                );
+                                // setTimeout(function () {
+                                //     window.location.reload();
+                                // }, 1800);
+                            }else{
+                                swal(
+                                    res.msg,
+                                    '',
+                                    'error'
+                                );
+                            }
+                        },
+                    });
+                }
+            }).catch(swal.noop);
+        } else {
+            swal(
+                '请至少选择一个!',
+                '',
+                'error'
+            );
+        }
+    }
+</script>
+</body>
+<!-- END : Body-->
+</html>

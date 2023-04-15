@@ -1,0 +1,170 @@
+{include file="common/head" /}
+<body data-col="2-columns" class=" 2-columns  layout-dark">
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<style>
+    /*分页*/
+    .pagination {margin-left: 8.5rem;}
+    .pagination li {display: inline-block;margin-right: -1px;padding: 13px;border: 1px solid #e2e2e2;min-width: 20px;text-align: center;width: 100px;height: 50px;}
+    .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+    .pagination li a {display: block;text-align: center;}
+
+    form .form-group {float: left;}
+    .fpqxmaxbox{  display: inline-block;  width: 100%;  }
+    .fpqxmaxbox .fpqxmaxboxtop{width: 100%;}
+    .fpqxmaxbox .fpqxmaxboxchild{margin-left: 5rem;margin-bottom: 3rem;}
+    .UpperLevel{ list-style-type:none;}
+    .childpbox{}
+</style>
+<div class="wrapper">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-11" style="margin-top: 50px;">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body table-responsive">
+                        <form class="form">
+                            <div>
+                                <p> <input type="checkbox" id="checkAllok" >&nbsp;全选</p>
+                                <ul>
+                                    <!--第一层-->
+                                    {volist name="xiaji" id="vo" }
+                                        <li class="UpperLevel">
+                                            <p>
+                                                <!--$res_num是该记录的在库中的数据。用{in}来做默认选中-->
+                                                <input type="checkbox" value="{$vo.id}"  name="power" {in name="$vo.id" value="$res_num"}checked {/in}>
+                                                {$vo.node_name}
+                                                {if !empty($vo.child)} <block onclick="xianshi({$vo.id})" style="font-size: 12px;color: #4caf50;">&nbsp;查看下级</block>{/if}
+                                            </p>
+                                            <!--判断该记录是否有son 也就是下一级-->
+                                            {if !empty($vo.child)}
+                                                <ul style="display: none" class="xianshibox{$vo.id}">
+                                                    <!--第二层-->
+                                                    {volist name="vo.child" id="voson" }
+                                                        <li class="UpperLevel" >
+                                                            <p class="childpbox">
+                                                                <input type="checkbox" value="{$voson.id}" name="power"  {in name="$voson.id" value="$res_num"} checked {/in} >
+                                                                {$voson.node_name}
+                                                            </p>
+                                                        </li>
+                                                    {/volist}
+                                                </ul>
+                                            {/if}
+                                        </li>
+                                    {/volist}
+                                </ul>
+                            </div>
+
+                            <div>
+                                {$show}
+                            </div>
+
+                            <div class="form-actions center">
+                                <button type="button" class="btn btn-raised btn-primary add">
+                                    <i class="fa fa-check-square-o"></i> 提交
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN APEX JS-->
+<script src="http://img.lll1.vip/apex-assets/js/app-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/notification-sidebar.js" type="text/javascript"></script>
+
+<!-- END APEX JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/sweetalert2.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/toastr.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL JS-->
+
+
+
+<script>
+    $(".add").click(function(){
+
+        var type      = '{$type}';
+
+        var nodelist = document.getElementsByName("power");
+        var check_arr1 = [];
+        for (var i = 0; i < nodelist.length; i++) {
+            if (nodelist[i].checked)
+                check_arr1.push(nodelist[i].value);
+        }
+        var check_arr = check_arr1.toString();
+
+        $.ajax({
+            type: 'post',
+            url: '/sun_admin/adminrole_roleeditsub',
+            dataType: 'json',
+            data: {"check_arr":check_arr,"type":type},
+            success: function(res){
+                if(res.status == '200')
+                {
+                    swal(
+                        res.msg,
+                        '',
+                        'success'
+                    );
+                }else{
+                    swal(
+                        res.msg,
+                        '',
+                        'error'
+                    );
+                }
+            },
+        });
+    })
+
+    // 点击父级选中子类所有数据
+    // 点击子类自动选中父级
+    $(":checkbox").click(function () {
+        var check = $(this).prop("checked")
+        if(check){
+            //先找到他的父级节点<p>再找他的下一个兄弟节点 在找所有的复选框 改变他的checked
+            $(this).parent().next().find(":checkbox").prop("checked",check)
+            //循环每一层下的p标签下的复选框
+            $(this).parents('.UpperLevel').each(function () {
+                //选中第一个p标签下的复选框
+                $(this).find('p:eq(0)').children(':checkbox').prop("checked",check)
+            })
+        }else{
+            //取消复选框
+            $(this).parent().next().find(":checkbox").prop("checked",check)
+            //循环每一层下的li标签下的复选框选中的个数
+            $(this).parents('.UpperLevel').each(function () {
+                var checkedLen =  $(this).find('li').find(":checkbox:checked").length
+                if (checkedLen <= 0){
+                    $(this).find('p:eq(0)').children(':checkbox').prop("checked",check)
+                }
+            })
+        }
+    })
+
+    //显示隐藏下级
+    function xianshi(type){
+        $('.xianshibox' + type).toggle();
+    }
+
+
+</script>
+</body>
+<!-- END : Body-->
+</html>

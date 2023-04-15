@@ -1,0 +1,280 @@
+{include file="common/all" /}
+<style>
+    .ccc{
+        height: 50px;
+        width: 100%;
+        /*position: absolute;*/
+        position: relative;
+        bottom: -35px;
+
+    }
+    .zzz{
+        /*position: relative;*/
+    }
+    .font-large-1{
+        font-size: 1.2rem !important;
+    }
+</style>
+<div class="main-panel">
+    <!-- BEGIN : Main Content-->
+    <div class="main-content">
+        <div class="content-wrapper"><!--Extended Table starts-->
+            <section id="extended">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <button style="margin-top: -3px;margin-left: 20px;" type="button" class="btn btn-raised btn-info square btn-min-width mr-1 mb-1" onclick="add_set()">添加配置</button>
+<!--                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('1')">用户协议</button>-->
+<!--                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('2')">隐私协议</button>-->
+<!--                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('8')">关于我们</button>-->
+<!--                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('3')">七牛云</button>-->
+<!--                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('4')">支付宝配置</button>-->
+<!--                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('5')">微信配置</button>-->
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('6')">app版本</button>
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('9')">交易规则</button>
+
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('10')">影票说明</button>
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('11')">通证说明</button>
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('12')">扑满说明</button>
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('13')">贡献值说明</button>
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('14')">活跃度说明</button>
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('15')">星级分红说明</button>
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('16')">证票闪兑</button>
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('17')">扑满排行榜</button>
+                                <button style="margin-top: 5px;margin-left: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="xieyi('18')">影票排行榜</button>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {volist name="set" id="sets"}
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                        <div class="card gradient-blackberry" >
+                            <div class="card-content">
+                                <div class="card-body pt-2 pb-0">
+                                    <div class="media">
+                                        <div class="media-body white text-left">
+                                            <h5 class="font-large-1 mb-0">{$sets.name}</h5>
+                                            <span>{$sets.key}</span>
+                                        </div>
+                                        <div class="media-right white text-right">
+                                            <button type="button" style="background-color:transparent;border: none;" class="btn btn-primary btn-raised btn-block" id="confirm-text2" onclick="shanchu('{$sets.key}')"><i class="icon-bulb font-large-1" style="cursor:pointer;"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="Widget-line-chart" class="height-75 WidgetlineChart WidgetlineChartshadow mb-2 zzz">
+                                        <input type="text" class="form-control ccc" placeholder="title" name="{$sets.key}" value="{$sets.value}" onchange="updata('{$sets.key}')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                </div>
+            </section>
+            <!--Extended Table Ends-->
+        </div>
+    </div>
+    <!-- END : End Main Content-->
+
+</div>
+</div>
+{include file="common/right" /}
+
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN APEX JS-->
+<!-- END APEX JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<!-- END PAGE LEVEL JS-->
+<script>
+    function chiyu()
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: '设置机器人关键词',
+                maxmin: true,
+                area: ['60%', '80%'],
+                content: '/sun_admin/set_robot_ci',
+            });
+        });
+    }
+    function huifu()
+    {
+        layer.ready(function () {
+            layer.open({
+                type: 2,
+                title: '设置回复内容',
+                maxmin: true,
+                area: ['60%', '80%'],
+                content: '/sun_admin/set_robot_cont'
+            });
+        });
+    }
+    function updata(type)
+    {
+        val = $('input[name='+type+']').val();
+        $.ajax({
+            type: 'post',
+            url: '/sun_admin/set_edit_add',
+            dataType: 'json',
+            data: {"key":type,"val":val},
+            success: function(res){
+                // swal("Here's a message!");
+                if(res.status == '200')
+                {
+                    toastr.success(res.msg)
+                }else{
+                    toastr.error(res.msg)
+                }
+            },
+        });
+    }
+    function jinyan()
+    {
+        swal({
+            title: "确定解除禁言?",
+            text: "请输入单个用户id",
+            input: "text",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "Write something"
+        }).then(function (inputValue) {
+            if (inputValue === "")
+            {
+                swal(
+                    '请输入单个用户id',
+                    '',
+                    'error'
+                );
+                return false
+            }else{
+                $.ajax({
+                    type: 'post',
+                    url: '/sun_admin/jinyan',
+                    dataType: 'json',
+                    data: {"type":"2","text":inputValue},
+                    success: function(res)
+                    {
+                        if(res.status == '200')
+                        {
+                            swal(
+                                res.msg,
+                                '',
+                                'success'
+                            );
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1800);
+                        }else{
+                            swal(
+                                res.msg,
+                                '',
+                                'error'
+                            );
+                        }
+                    },
+                });
+            }
+        });
+    }
+    function shanchu(type)
+    {
+        swal({
+            title: '确定删除?',
+            text: "是否删除当前信息",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0CC27E',
+            cancelButtonColor: '#FF586B',
+            confirmButtonText: '是',
+            cancelButtonText: "否"
+        }).then(function (isConfirm) {
+            // isConfirm 返回结果true和false
+            if (isConfirm) {
+                swal(
+                    '不允许删除!',
+                    '',
+                    'error'
+                );
+                // $.ajax({
+                //     type: 'post',
+                //     url: '/sun_admin/set_edit',
+                //     dataType: 'json',
+                //     data: {"id":id,"type":"del"},
+                //     success: function(res){
+                //         if(res.status == '200')
+                //         {
+                //             swal(
+                //                 '操作成功!',
+                //                 '',
+                //                 'success'
+                //             );
+                //         }else{
+                //             swal(
+                //                 '操作失败!',
+                //                 '',
+                //                 'error'
+                //             );
+                //         }
+                //     },
+                // });
+            }
+        }).catch(swal.noop);
+    }
+    function add_set()
+    {
+        layer.ready(function () {
+            layer.open({
+                type: 2,
+                title: 'Add Configuration',
+                maxmin: true,
+                area: ['60%', '80%'],
+                content: '/sun_admin/add_set'
+            });
+        });
+    }
+    function xieyi(type)
+    {
+        layer.ready(function () {
+            layer.open({
+                type: 2,
+                title: 'ieyi',
+                maxmin: true,
+                area: ['60%', '80%'],
+                content: '/sun_admin/xieyi?type='+type
+            });
+        });
+    }
+    function youxiang()
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: '设置支付通知邮箱',
+                maxmin: true,
+                area: ['80%', '80%'],
+                content: '/sun_admin/set_youxiang',
+            });
+        });
+    }
+</script>
+</body>
+<!-- END : Body-->
+</html>

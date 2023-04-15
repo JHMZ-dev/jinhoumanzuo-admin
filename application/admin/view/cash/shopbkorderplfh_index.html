@@ -1,0 +1,136 @@
+{include file="common/head" /}
+<body data-col="2-columns" class=" 2-columns  layout-dark">
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<div class="wrapper">
+
+    <div class="row justify-content-md-center">
+        <div class="col-md-10" style="margin-top: 50px;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="px-3">
+                        <form class="form">
+                            <div class="form-body">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon01" onchange="uploads()">
+<!--                                    <input type="file"   id="file2" aria-describedby="inputGroupFileAddon02" onchange="uploads()">-->
+                                    <label class="custom-file-label" for="file">上传批量发货表格</label>
+                                </div>
+                                <br>
+                                <p id="msgts"></p>
+                                <div style="display: none;" id="msgbox">
+                                    <div>
+                                        <p>检查文件错误单号（请核对）：</p>
+                                        <div id="msg">
+
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </form>
+
+<!--                        <form class="form">-->
+<!--                            <div class="form-body">-->
+<!--                                <div class="custom-file">-->
+<!--                                    <input type="file" class="custom-file-input" id="file_fl" aria-describedby="inputGroupFileAddon01" onchange="uploads_fl()">-->
+<!--                                    <label class="custom-file-label" for="file">上传批量商品表格</label>-->
+<!--                                </div>-->
+<!--                                <br>-->
+<!--                                <p id="msgts_fl"></p>-->
+<!--                                <div style="display: none;" id="msgbox_fl">-->
+<!--                                    <div>-->
+<!--                                        <p>检查分类名无匹配id的商品id项：</p>-->
+<!--                                        <div id="msg_fl">-->
+
+<!--                                        </div>-->
+
+<!--                                        <p>修改失败的商品：</p>-->
+<!--                                        <div id="msg_fl2">-->
+
+<!--                                        </div>-->
+
+<!--                                    </div>-->
+<!--                                    <br>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </form>-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN APEX JS-->
+
+<script src="http://img.lll1.vip/apex-assets/vendors/js/sweetalert2.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/toastr.min.js" type="text/javascript"></script>
+<script src="__PUB__/layer/layer.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/sweetalert2.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/toastr.min.js" type="text/javascript"></script>
+
+
+<script src="http://img.lll1.vip/apex-assets/js/app-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/notification-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/customizer.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/sweet-alerts.js" type="text/javascript"></script>
+
+<script>
+    function sc(func)
+    {
+        var fileObj = document.getElementById('file').files[0]; // 获取文件对象
+        var FileController = "/sun_admin/shopbkorderplfh_upload";       // 接收上传文件的后台地址
+        // FormData 对象
+        var form = new FormData();                      // 可以增加表单数据
+        form.append('filename', fileObj);                           // 文件对象
+        // XMLHttpRequest 对象
+        var xhr = new XMLHttpRequest();
+        xhr.open("post", FileController, true);
+        xhr.onload = function () {
+            var res = this.responseText;
+            res = JSON.parse(res)
+            func(res);
+        };
+        xhr.send(form);
+        // alert("上传完成")
+    }
+    function uploads()
+    {
+        // console.log(target);return false;
+        sc(function(res)
+        {
+            console.log(res);
+            if(res.status == 200)
+            {
+                if(res.datas.err){
+                    $('#msgbox').css('display','block');
+                    $('#msg').html(res.datas.err);
+                }
+
+                $('#msgts').html(res.msg);
+            }else{
+                alert(res.msg)
+            }
+        })
+    }
+
+
+
+</script>
+</body>
+<!-- END : Body-->
+</html>

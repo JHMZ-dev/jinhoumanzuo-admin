@@ -1,0 +1,198 @@
+{include file="common/head" /}
+<body data-col="2-columns" class=" 2-columns  layout-dark">
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<style>
+    /*分页*/
+    .pagination {margin-left: 8.5rem;}
+    .pagination li {display: inline-block;margin-right: -1px;padding: 13px;border: 1px solid #e2e2e2;min-width: 15px;text-align: center;width: 100px;height: 50px;}
+    .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+    .pagination li a {display: block;text-align: center;}
+</style>
+<div class="wrapper">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-12" style="margin-top: 50px;">
+            <div class="card">
+
+                <div class="card-content">
+                    <div class="card-body table-responsive">
+                        <table class="table text-center">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>node_name</th>
+                                <th style="width:15rem;">control_name</th>
+                                <th  style="width:15rem;">action_name</th>
+                                <th  style="width:3rem;">is_menu</th>
+                                <th  style="width:5rem;">type_id</th>
+                                <th style="width:5rem;">style</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="xiaji" id="users" empty="<div class='volistno'>暂时没有数据<div>"}
+                            <?php $outkey = $key; ?>
+                            <tr>
+                                <td>{$users.id}</td>
+                                <td>
+                                    <input type="text" class="form-control" name="node_name{$users.id}" id="node_name{$users.id}" value="{$users.node_name}">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="control_name{$users.id}" id="control_name{$users.id}" value="{$users.control_name}">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="action_name{$users.id}" id="action_name{$users.id}" value="{$users.action_name}">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="is_menu{$users.id}" id="is_menu{$users.id}" value="{$users.is_menu}">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="type_id{$users.id}" id="type_id{$users.id}" value="{$users.type_id}">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="style{$users.id}" id="style{$users.id}" value="{$users.style}">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-raised btn-icon btn-success mr-1" onclick="admin_nodetijiao('{$users.id}')">
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-raised btn-icon btn-danger mr-1" onclick="admin_nodedel('{$users.id}')">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                        {$show}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN APEX JS-->
+<script src="http://img.lll1.vip/apex-assets/js/app-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/notification-sidebar.js" type="text/javascript"></script>
+
+<!-- END APEX JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/sweetalert2.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/toastr.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL JS-->
+<script>
+
+    //提交
+    function admin_nodetijiao(type)
+    {
+        var node_name      = $('#node_name' + type).val();
+        var control_name      = $('#control_name' + type).val();
+        var action_name      = $('#action_name' + type).val();
+        var type_id      = $('#type_id' + type).val();
+        var is_menu      = $('#is_menu' + type).val();
+        var style      = $('#style' + type).val();
+
+        swal({
+            title:'是否确定操作',
+            text:'是否确定处理状态？',
+            type:'warning',
+            showCancelButton:true,
+            confirmButtonColor:'#0CC27E',
+            cancelButtonColor:'#FF586B',
+            confirmButtonText:'是',
+            cancelButtonText:"否"
+        }).then(function(isConfirm){
+            //isConfirm返回结果true和false
+            if(isConfirm){
+                $.ajax({
+                    type: 'post',
+                    url: '/sun_admin/adminnode_nodeeditsub',
+                    dataType: 'json',
+                    data: {"type":type,"node_name":node_name,"control_name":control_name,"action_name":action_name,"type_id":type_id,"is_menu":is_menu,"style":style},
+                    success: function(res){
+                        if(res.status == '200')
+                        {
+                            swal(
+                                res.msg,
+                                '',
+                                'success'
+                            );
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1800);
+                        }else{
+                            swal(
+                                res.msg,
+                                '',
+                                'error'
+                            );
+                        }
+                    },
+                });
+            }
+        }).catch(swal.noop);
+    }
+
+    //删除节点
+    function admin_nodedel(type)
+    {
+
+        swal({
+            title:'是否确定操作',
+            text:'是否确定处理状态？',
+            type:'warning',
+            showCancelButton:true,
+            confirmButtonColor:'#0CC27E',
+            cancelButtonColor:'#FF586B',
+            confirmButtonText:'是',
+            cancelButtonText:"否"
+        }).then(function(isConfirm){
+            //isConfirm返回结果true和false
+            if(isConfirm){
+                $.ajax({
+                    type: 'post',
+                    url: '/sun_admin/adminnode_nodedel',
+                    dataType: 'json',
+                    data: {"type":type},
+                    success: function(res){
+                        if(res.status == '200')
+                        {
+                            swal(
+                                res.msg,
+                                '',
+                                'success'
+                            );
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1800);
+                        }else{
+                            swal(
+                                res.msg,
+                                '',
+                                'error'
+                            );
+                        }
+                    },
+                });
+            }
+        }).catch(swal.noop);
+    }
+
+</script>
+</body>
+<!-- END : Body-->
+</html>

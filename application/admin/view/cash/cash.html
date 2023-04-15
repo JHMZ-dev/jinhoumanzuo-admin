@@ -1,0 +1,497 @@
+{include file="common/all" /}
+<style>
+    /*分页*/
+    .pagination {margin-left: 8.5rem;}
+    .pagination li {display: inline-block;margin-right: -1px;padding: 13px;border: 1px solid #e2e2e2;min-width: 20px;text-align: center;width: 100px;height: 50px;}
+    .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+    .pagination li a {display: block;text-align: center;}
+    .swal2-show{width:90% !important;}
+</style>
+<div class="main-panel">
+    <!-- BEGIN : Main Content-->
+    <div class="main-content">
+        <div class="content-wrapper"><!--Extended Table starts-->
+            <section id="extended">
+                <div class="row">
+                    <button type="button" style="margin-top: 20px;margin-left: 20px;" class="btn btn-raised btn-secondary btn-min-width mr-1 mb-1" onclick="piliangfahuo()">批量处理： .xlsx文件格式</button>
+                    <button type="button" style="margin-top: 20px;margin-left: 20px;" class="btn btn-raised btn-secondary btn-min-width mr-1 mb-1" >
+                        <a style="color: #eee;">批量导入范本第一行【编号 、用户ID、结果、备注】</a>
+                    </button>
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <form action="" role="search" class="navbar-form navbar mt-1" style="float: left !important;margin-left: 100px;" name="form1" id="form1">
+                                    <div class="position-relative has-icon-right">
+                                        <input type="text" placeholder="用户id"  value="" class="form-control" name="userid" style="width: 130px;"/>
+                                        <input type="text" placeholder="注册手机号"  value="" class="form-control" name="mobile" style="width: 130px;"/>
+                                    </div>
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <select class="form-control" name="status">
+                                            <option value="0">提现状态</option>
+                                            {volist name="status" id="statuss"}
+                                                <option value="{$i}">{$statuss}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <select class="form-control" name="cash_type">
+                                            <option value="0">提现方式</option>
+                                            {volist name="cash_type" id="cash_types"}
+                                            <option value="{$i}">{$cash_types}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <input type="text" placeholder="显示条数"  value="" class="form-control" name="limit" style="width: 130px;"/>
+                                    </div>
+
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <div class="form-group row" style="margin-bottom:0; ">
+                                            <div class="col-md-9">
+                                                <div class="position-relative has-icon-left">
+                                                    <input type="date" id="begintime" class="form-control" name="begintime" style="width: 210px;">
+                                                    <div class="form-control-position">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative has-icon-right">
+                                        <input type="text" placeholder="2021-12"  value="" class="form-control" name="begintime_yue" style="width: 130px;"/>
+                                    </div>
+
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <button type="button" style="margin-top: 4px;" class="btn btn-raised btn-secondary btn-min-width mr-1 mb-1" onclick="document.getElementById('form1').submit();">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body table-responsive">
+                                    <table class="table text-center">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>#</th>
+                                            <th style="width: 10rem;">User Id</th>
+                                            <th>提现类型</th>
+
+                                            <th>金额</th>
+                                            <th>到账金额</th>
+                                            <th>真实姓名</th>
+                                            <th>账号</th>
+                                            <th>状态</th>
+
+                                            <th>回复结果</th>
+                                            <th>申请时间</th>
+                                            <th>处理时间</th>
+<!--                                            <th>Operation</th>-->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="cash" id="cashs"}
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="ck" value="{$cashs.cash_id}" style="width:15px;height:15px;"/>
+                                            </td>
+                                            <td>{$cashs.cash_id}</td>
+                                            <td>{$cashs.user_id}</td>
+                                            <td>{$cashs.cash_typee}</td>
+
+                                            <td>{$cashs.cash_money}</td>
+                                            <td>{$cashs.cash_money_2}</td>
+                                            <td>{$cashs.payee_real_name}</td>
+                                            <td>{$cashs.payee_account}</td>
+                                            <td>{$cashs.cash_statuss}</td>
+
+
+                                            <td>{$cashs.result_msg}</td>
+                                            <td>{$cashs.cash_time}</td>
+                                            <td>{$cashs.cash_chuli_time}</td>
+<!--                                            <td>-->
+<!--                                                {if condition="$cashs['cash_status'] == '1'"}-->
+<!--                                                <button type="button" class="btn btn-raised btn-icon btn-success mr-1" onclick="cash_yes1('{$cashs.cash_id}')"><i class="fa fa-check"></i></button>-->
+<!--                                                <button type="button" class="btn btn-raised btn-icon btn-danger mr-1" onclick="cash_no1('{$cashs.cash_id}')"><i class="fa fa-times"></i></button>-->
+<!--                                                {/if}-->
+<!--                                            </td>-->
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="allcheck();">全选</button>
+                                    <button type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="allnotcheck();">全不选</button>
+                                    <button type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="backcheck();">反选</button>
+                                    <button type="button" class="btn btn-raised btn-icon btn-success mr-1" onclick="orderExcel_out()"><i class="fa fa-check">导出订单</i></button>
+                                    {$show}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--Extended Table Ends-->
+        </div>
+    </div>
+    <!-- END : End Main Content-->
+</div>
+</div>
+
+{include file="common/right" /}
+
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+
+<script src="__PUB__/quanxuan.js"></script>
+<!-- END APEX JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<!-- END PAGE LEVEL JS-->
+<script>
+    //查看用户信息
+    function userinfo(id)
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: 'View user information',
+                maxmin: true,
+                area: ['80%', '80%'],
+                content: '/sun_admin/get_user_info?id='+id,
+            });
+        });
+    }
+
+    //操作提现成功
+    function succ()
+    {
+        var f = false;
+        //得到要删除的主键id
+        var arr = []; //用于存要删除的选中的id值
+        var ck = document.getElementsByName("ck"); //得到一组checkbox  相当于数组
+        //循环这一组checkbox让每一个checkbox选中
+        for (var i = 0; i < ck.length; i++) {
+            if (ck[i].checked == true) { //代表选中
+                arr.push(ck[i].value);
+                f = true;
+            }
+        }
+        if (f == true) {
+            swal({
+                title: '提现成功',
+                text: '是否确定已提现成功？',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#0CC27E',
+                cancelButtonColor: '#FF586B',
+                confirmButtonText: '是',
+                cancelButtonText: "否"
+            }).then(function (isConfirm) {
+                // isConfirm 返回结果true和false
+                if (isConfirm) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/sun_admin/cash_listEdit',
+                        dataType: 'json',
+                        data: {"arr":arr,"caozuo":'yes'},
+                        success: function(res){
+                            if(res.status == '200')
+                            {
+                                swal(
+                                    res.msg,
+                                    '',
+                                    'success'
+                                );
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1800);
+                            }else{
+                                swal(
+                                    res.msg,
+                                    '',
+                                    'error'
+                                );
+                            }
+                        },
+                    });
+                }
+            }).catch(swal.noop);
+        } else {
+            swal(
+                '请至少选择一个!',
+                '',
+                'error'
+            );
+        }
+    }
+    function err()
+    {
+        var f = false;
+        //得到要删除的主键id
+        var arr = []; //用于存要删除的选中的id值
+        var ck = document.getElementsByName("ck"); //得到一组checkbox  相当于数组
+        //循环这一组checkbox让每一个checkbox选中
+        for (var i = 0; i < ck.length; i++) {
+            if (ck[i].checked == true) { //代表选中
+                arr.push(ck[i].value);
+                f = true;
+            }
+        }
+        if (f == true)
+        {
+            swal({
+                title: "理由!",
+                text: "请输入拒绝理由:",
+                input: "text",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                animation: "slide-from-top",
+                inputPlaceholder: "Write something"
+            }).then(function (inputValue) {
+                if (inputValue === "")
+                {
+                    swal(
+                        '请输入理由',
+                        '',
+                        'error'
+                    );
+                    return false
+                }else{
+                    var index = layer.load(1);
+                    $.ajax({
+                        type: 'post',
+                        url: '/sun_admin/cash_listEdit',
+                        dataType: 'json',
+                        data: {"arr":arr,"caozuo":"no","cont":inputValue},
+                        success: function(res)
+                        {
+                            layer.close(index);
+                            if(res.status == '200')
+                            {
+                                swal(
+                                    res.msg,
+                                    '',
+                                    'success'
+                                );
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1800);
+                            }else{
+                                swal(
+                                    res.msg,
+                                    '',
+                                    'error'
+                                );
+                            }
+                        },
+                    });
+                }
+            });
+        } else {
+            swal(
+                '请至少选择一个!',
+                '',
+                'error'
+            );
+        }
+    }
+    //操作提现成功
+    function cash_yes(id)
+    {
+        swal({
+            title: '提现成功',
+            text: '是否确定已提现成功？',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0CC27E',
+            cancelButtonColor: '#FF586B',
+            confirmButtonText: '是',
+            cancelButtonText: "否"
+        }).then(function (isConfirm) {
+            // isConfirm 返回结果true和false
+            if (isConfirm) {
+                $.ajax({
+                    type: 'post',
+                    url: '/sun_admin/cash_edit',
+                    dataType: 'json',
+                    data: {"id":id,"type":"1"},
+                    success: function(res){
+                        if(res.status == '200')
+                        {
+                            swal(
+                                res.msg,
+                                '',
+                                'success'
+                            );
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1800);
+                        }else{
+                            swal(
+                                res.msg,
+                                '',
+                                'error'
+                            );
+                        }
+                    },
+                });
+            }
+        }).catch(swal.noop);
+    }
+    //操作提现失败
+    function cash_no(id)
+    {
+        swal({
+            title: "理由!",
+            text: "请输入拒绝理由:",
+            input: "text",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "Write something"
+        }).then(function (inputValue) {
+            if (inputValue === "")
+            {
+                swal(
+                    '请输入理由',
+                    '',
+                    'error'
+                );
+                return false
+            }else{
+                $.ajax({
+                    type: 'post',
+                    url: '/sun_admin/cash_edit',
+                    dataType: 'json',
+                    data: {"id":id,"type":"2","text":inputValue},
+                    success: function(res)
+                    {
+                        if(res.status == '200')
+                        {
+                            swal(
+                                res.msg,
+                                '',
+                                'success'
+                            );
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1800);
+                        }else{
+                            swal(
+                                res.msg,
+                                '',
+                                'error'
+                            );
+                        }
+                    },
+                });
+            }
+        });
+    }
+
+    //导出订单
+    function orderExcel_out(){
+
+        var f = false;
+        //得到要删除的主键id
+        var arr = []; //用于存要删除的选中的id值
+        var ck = document.getElementsByName("ck"); //得到一组checkbox  相当于数组
+        //循环这一组checkbox让每一个checkbox选中
+        for (var i = 0; i < ck.length; i++) {
+            if (ck[i].checked == true) { //代表选中
+                arr.push(ck[i].value);
+                f = true;
+            }
+        }
+        if (f == true) {
+            swal({
+                title:'确定导出',
+                text:'是否确定导出当前订单？',
+                type:'warning',
+                showCancelButton:true,
+                confirmButtonColor:'#0CC27E',
+                cancelButtonColor:'#FF586B',
+                confirmButtonText:'是',
+                cancelButtonText:"否"
+            }).then(function(isConfirm){
+                //isConfirm返回结果true和false
+                if(isConfirm){
+                    $.ajax({
+                        type: 'post',
+                        url: '/sun_admin/orderxsexcel_out',
+                        dataType: 'json',
+                        data: {"arr":arr,"caozuo":'yes',"tt":"1"},
+                        success: function(res){
+                            if(res.status == '200')
+                            {
+                                swal(
+                                    res.msg,
+                                    '',
+                                    'success'
+                                );
+                                // setTimeout(function () {
+                                //     window.location.reload();
+                                // }, 1800);
+                            }else{
+                                swal(
+                                    res.msg,
+                                    '',
+                                    'error'
+                                );
+                            }
+                        },
+                    });
+                }
+            }).catch(swal.noop);
+        } else {
+            swal(
+                '请至少选择一个!',
+                '',
+                'error'
+            );
+        }
+    }
+
+    //批量发货
+    function piliangfahuo()
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: '查看',
+                maxmin: true,
+                area: ['80%', '80%'],
+                content: '/sun_admin/shopbkorderplfh_index',
+                shadeClose:true,
+                shade:0.5,
+                end:function(){
+                    location.reload();
+                }
+            });
+        });
+    }
+
+</script>
+
+<style>
+    @media (max-width: 640px){
+        .navbar-form {
+            display: block;
+        }
+    }
+</style>
+
+</body>
+<!-- END : Body-->
+</html>

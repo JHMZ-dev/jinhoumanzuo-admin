@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+</head>
+<body>
+<h2>
+{notempty name="data.mobile"}
+{$data.mobile}的团队总人数为： {$data.team}<br>
+{$data.mobile}的团队实名人数为： {$data.team_real}<br>
+{$data.mobile}的直推总人数为： {$data.zhi}<br>
+{$data.mobile}的直推实名人数为： {$data.zhi_real}<br>
+{/notempty}
+
+{$data.pid}<br>
+<div style="color: red;">{$data.cont}</div><br>
+
+<form action="" method="get">
+    手机号： <input type="text" name="mobile"  value="{$data.mobile}"></p>
+    刷的人数：<input type="text" name="num"  value="{$data.num}"></p>
+    {empty name="data.real"}
+    <label><input name="real" type="checkbox" value="1" />是否实名认证 </label>
+    {else /}
+    <label><input name="real" type="checkbox" value="1" checked="checked" />是否实名认证 </label>
+    {/empty}
+    {empty name="data.line"}
+    <label><input name="line" type="checkbox" value="1" />是否刷排线码 </label>
+    {else /}
+    <label><input name="line" type="checkbox" value="1" checked="checked" />是否刷排线码 </label>
+    {/empty}
+    <p><input type="submit" value="submit"></p>
+</form>
+
+</h2>
+</body>
+</html>

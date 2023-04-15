@@ -1,0 +1,56 @@
+{include file="common/head" /}
+<!-- BEGIN : Body-->
+<style>
+    /*分页*/
+    .pagination {margin-left: 8.5rem;}
+    .pagination li {display: inline-block;margin-right: -1px;padding: 13px;border: 1px solid #e2e2e2;min-width: 15px;text-align: center;width: 100px;height: 50px;}
+    .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+    .pagination li a {display: block;text-align: center;}
+</style>
+<body data-col="2-columns" class=" 2-columns  layout-dark">
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<div class="wrapper">
+    <center><h1>UEP明细</h1></center>
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <div class="card-content">
+                            <div class="card-body table-responsive">
+                                <table class="table text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>变更类型</th>
+                                        <th>变更之前的值</th>
+                                        <th>变更值</th>
+                                        <th>变更之后的值</th>
+                                        <th>变更原因</th>
+                                        <th>变更时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name="data" id="datas"}
+                                    <tr>
+                                        <td>{$datas.user_uep_id}</td>
+                                        <td>{$datas.user_uep_type}</td>
+                                        <td>{$datas.user_uep_before}</td>
+                                        <td>{$datas.user_uep_change}</td>
+                                        <td>{$datas.user_uep_after}</td>
+                                        <td>{$datas.user_uep_cont}</td>
+                                        <td>{$datas.user_uep_time}</td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                                {$show}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

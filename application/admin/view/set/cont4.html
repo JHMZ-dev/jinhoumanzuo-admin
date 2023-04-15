@@ -1,0 +1,112 @@
+{include file="common/head" /}
+<body data-col="2-columns" class=" 2-columns  layout-dark">
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<div class="wrapper">
+
+    <div class="row justify-content-md-center">
+        <div class="col-md-9" style="margin-top: 50px;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="px-3">
+                        <form class="form">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="form-group col-12 mb-2">
+                                        <label >支付宝app_id</label>
+                                        <input type="text" class="form-control ali_app_id" value="{$data.ali_app_id}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="form-group col-12 mb-2">
+                                        <label >商户私匙</label>
+                                        <input type="text" class="form-control ali_private_key" value="{$data.ali_private_key}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="form-group col-12 mb-2">
+                                        <label >支付宝公匙</label>
+                                        <input type="text" class="form-control ali_public_key" value="{$data.ali_public_key}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="form-group col-12 mb-2">
+                                        <label >支付宝异步通知路径(只填写路径 域名在系统中设置)</label>
+                                        <input type="text" class="form-control ali_notify_url" value="{$data.ali_notify_url}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions center">
+                                <button type="button" class="btn btn-raised btn-primary add">
+                                    <i class="fa fa-check-square-o"></i> Save
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN APEX JS-->
+<script src="http://img.lll1.vip/apex-assets/js/app-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/notification-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/customizer.js" type="text/javascript"></script>
+<!-- END APEX JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/sweetalert2.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/toastr.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL JS-->
+<script>
+    $(".add").click(function(){
+        var ali_app_id   = $('.ali_app_id').val();
+        var ali_private_key   = $('.ali_private_key').val();
+        var ali_public_key   = $('.ali_public_key').val();
+        var ali_notify_url   = $('.ali_notify_url').val();
+        var type      = '{$type}'
+        $.ajax({
+            type: 'post',
+            url: '/sun_admin/set_edit_all',
+            dataType: 'json',
+            data: {"type":type,"ali_app_id":ali_app_id,"ali_private_key":ali_private_key,"ali_public_key":ali_public_key,"ali_notify_url":ali_notify_url},
+            success: function(res){
+                if(res.status == '200')
+                {
+                    swal(
+                        res.msg,
+                        '',
+                        'success'
+                    );
+                }else{
+                    swal(
+                        res.msg,
+                        '',
+                        'error'
+                    );
+                }
+            },
+        });
+    })
+</script>
+</body>
+<!-- END : Body-->
+</html>

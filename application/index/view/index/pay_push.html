@@ -1,0 +1,40 @@
+
+<!-- BEGIN VENDOR JS-->
+<script src="__PUB__/jquery-3.2.1.min.js" type="text/javascript"></script>
+<!-- END APEX JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<!-- END PAGE LEVEL JS-->
+<script>
+    var  wsServer = 'ws://127.0.0.1:9512/?admin=payy';
+    var  websocket = new WebSocket(wsServer);
+    var  msg   = '{$msg}';
+    websocket.onopen = function (evt) { onOpen(evt) };
+    websocket.onclose = function (evt) { onClose(evt) };
+    websocket.onmessage = function (evt) { onMessage(evt) };
+    websocket.onerror = function (evt) { onError(evt) };
+    function onOpen(evt) {
+        console.log("链接成功");
+        message = '{"type":"duobao","data":{"msg":"'+msg+'"}}';
+        console.log(message);
+        websocket.send(message);
+    }
+    function onClose(evt) {
+        console.log("断开");
+    }
+    function onMessage(evt) {
+        let socketObj = JSON.parse(evt.data);
+        if(socketObj.code != 200)
+        {
+            alert(socketObj.msg)
+        }
+        console.log(socketObj);
+    }
+    function onError(evt) {
+        let socketObj = JSON.parse(evt.data);
+        alert('错误日志: ' + socketObj);
+        console.log('错误日志: ' + socketObj);
+    }
+</script>
+</body>
+<!-- END : Body-->
+</html>

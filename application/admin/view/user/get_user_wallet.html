@@ -1,0 +1,56 @@
+{include file="common/head" /}
+<!-- BEGIN : Body-->
+<style>
+    /*分页*/
+    .pagination {margin-left: 8.5rem;}
+    .pagination li {display: inline-block;margin-right: -1px;padding: 13px;border: 1px solid #e2e2e2;min-width: 15px;text-align: center;width: 100px;height: 50px;}
+    .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+    .pagination li a {display: block;text-align: center;}
+</style>
+<body data-col="2-columns" class=" 2-columns  layout-dark">
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<div class="wrapper">
+
+<div class="row match-height">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="px-3">
+                    <div class="card-content">
+                        <div class="card-body table-responsive">
+                            <table class="table text-center">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Money</th>
+                                    <th>Status</th>
+                                    <th>Reasons</th>
+                                    <th>Add Time</th>
+                                    <th>Edit Time</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="wallet" id="wallet"}
+                                <tr>
+                                    <td>{$wallet.wallet_id}</td>
+                                    <td>{$wallet.wallet_type}</td>
+                                    <td>{$wallet.wallet_money}</td>
+                                    <td>{$wallet.wallet_status}</td>
+                                    <td>{$wallet.wallet_cont}</td>
+                                    <td>{$wallet.wallet_add_time}</td>
+                                    <td>{$wallet.wallet_edit_time}</td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                            {$show}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

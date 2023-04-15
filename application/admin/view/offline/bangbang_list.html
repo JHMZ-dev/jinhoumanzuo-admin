@@ -1,0 +1,210 @@
+{include file="common/all" /}
+<style>
+    /*分页*/
+    .pagination {margin-left: 8.5rem;}
+    .pagination li {display: inline-block;margin-right: -1px;padding: 13px;border: 1px solid #e2e2e2;min-width: 20px;text-align: center;width: 100px;height: 50px;}
+    .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+    .pagination li a {display: block;text-align: center;}
+
+    /*.swal2-show{width:90% !important;}*/
+</style>
+<div class="main-panel">
+    <!-- BEGIN : Main Content-->
+    <div class="main-content">
+        <div class="content-wrapper"><!--Extended Table starts-->
+            <section id="extended">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <div>
+                                    <button style="margin-top: 20px;" type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="add_bangbang()">添加</button>
+                                </div>
+                                <form action="" role="search" class="navbar-form navbar mt-1" style="float: left !important;margin-left: 100px;" name="form1" id="form1">
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <select class="form-control" name="cont_type">
+                                            <option value="0">请选择</option>
+                                            <option value="1">序号</option>
+                                            <option value="2">用户id</option>
+                                        </select>
+                                    </div>
+                                    <div class="position-relative has-icon-right">
+                                        <input type="text" placeholder="Search" class="form-control" name="cont"/>
+                                    </div>
+
+                                    <div class="position-relative has-icon-right" style="margin-left: 20px;">
+                                        <button type="button" style="margin-top: 4px;" class="btn btn-raised btn-secondary btn-min-width mr-1 mb-1" onclick="document.getElementById('form1').submit();">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body table-responsive">
+                                    <table class="table text-center">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 6rem;">序号</th>
+                                            <th style="width: 16rem;">用户id</th>
+                                            <th style="width: 16rem;">备注</th>
+                                            <th style="width: 6rem;">时间</th>
+                                            <th style="width: 6rem;">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="order" id="lists"}
+                                        <tr>
+                                            <td><span>{$lists.bangbang_id}</span></td>
+                                            <td>  {$lists.user_id} </td>
+                                            <td>
+                                                <input type="text" class="form-control" onchange="editdata('{$lists.bangbang_id}')" id="nickname{$lists.bangbang_id}" value="{$lists.nickname}">
+                                            </td>
+                                            <td>  {$lists.time} </td>
+                                            <td>
+                                                <button type="button" class="btn btn-raised btn-icon btn-secondary mr-1" onclick="bangbang_delete('{$lists.bangbang_id}')">删除</button>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                    {$show}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--Extended Table Ends-->
+        </div>
+    </div>
+    <!-- END : End Main Content-->
+</div>
+</div>
+
+{include file="common/right" /}
+
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+
+
+<script>
+    //查看用户信息
+    function userinfo(id)
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: '查看用户信息',
+                maxmin: true,
+                area: ['80%', '80%'],
+                content: '/sun_admin/get_user_info?id='+id,
+                shadeClose:true,
+                shade:0.5,
+                end:function(){
+                    location.reload();
+                }
+            });
+        });
+    }
+
+    function editdata(id){
+        var nickname = '#nickname'+id;
+        var beizhu = $(nickname).val();
+
+        console.log(beizhu);
+        $.ajax({
+            type: 'post',
+            url: '/sun_admin/editdata',
+            dataType: 'json',
+            data: {"id":id,"key":'nickname',"val":beizhu},
+            success: function(res){
+                if(res.status == '200')
+                {
+                    toastr.success(res.msg);
+                    // setTimeout(function () {
+                    //     window.location.reload();
+                    // }, 1800);
+                }else{
+                    toastr.error(res.msg)
+                }
+            },
+        });
+    }
+
+    function bangbang_delete(id)
+    {
+        var title = '操作';
+        var text  = '是否确定操作?';
+        swal({
+            title: title,
+            text: text,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0CC27E',
+            cancelButtonColor: '#FF586B',
+            confirmButtonText: '是',
+            cancelButtonText: "否"
+        }).then(function (isConfirm) {
+            // isConfirm 返回结果true和false
+            if (isConfirm) {
+                $.ajax({
+                    type: 'post',
+                    url: '/sun_admin/bangbang_delete',
+                    dataType: 'json',
+                    data: {"id":id},
+                    success: function(res){
+                        if(res.status == '200')
+                        {
+                            swal(
+                                res.msg,
+                                '',
+                                'success'
+                            );
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1800);
+                        }else{
+                            swal(
+                                res.msg,
+                                '',
+                                'error'
+                            );
+                        }
+                    },
+                });
+            }
+        }).catch(swal.noop);
+    }
+
+    function add_bangbang(id)
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: '查看',
+                maxmin: true,
+                area: ['80%', '80%'],
+                content: '/sun_admin/add_bangbang',
+                shadeClose:true,
+                shade:0.5,
+                end:function(){
+                    location.reload();
+                }
+            });
+        });
+    }
+
+
+</script>
+</body>
+<!-- END : Body-->
+</html>

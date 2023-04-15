@@ -1,0 +1,198 @@
+{include file="common/all" /}
+<style>
+    /*分页*/
+    .pagination {margin-left: 8.5rem;}
+    .pagination li {display: inline-block;margin-right: -1px;padding: 13px;border: 1px solid #e2e2e2;min-width: 20px;text-align: center;width: 100px;height: 50px;}
+    .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+    .pagination li a {display: block;text-align: center;}
+</style>
+<div class="main-panel">
+    <!-- BEGIN : Main Content-->
+    <div class="main-content">
+        <div class="content-wrapper"><!--Extended Table starts-->
+            <section id="extended">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div style="float: left;">随机空投人数：<input type="text" class="form-control ccc"  name="kongtou_ren" value="{$kongtou_ren}" style="width: 150px;" onchange="updata('kongtou_ren')"></div>
+                        <div>空投手续费比列：<input type="text" class="form-control ccc"  name="kongtou_bilie" value="{$kongtou_bilie}" style="width: 150px;" onchange="updata('kongtou_bilie')"></div>
+                        <div class="card">
+                            <div class="card-header">
+                                <button type="button" style="margin-top: 4px;" class="btn btn-raised btn-secondary btn-min-width mr-1 mb-1" onclick="qian()">打钱</button>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body table-responsive">
+                                    昨日影票兑换通证数量：{$_yp_to_tz_num_zuo}
+                                    昨日影票手续费：{$_yp_to_tz_shouxu_zuo}
+                                    今日影票兑换通证数量：{$_yp_to_tz_num}
+                                    今日影票手续费：{$_yp_to_tz_shouxu}
+                                    总影票兑换通证数量：{$zong_yp_to_tz_num}
+                                    总影票手续费：{$zong_yp_to_tz_shouxu}
+                                    <table class="table text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th style="width: 14rem;">名称</th>
+                                            <th style="width: 12rem;">需要的大区活跃值</th>
+                                            <th style="width: 12rem;">需要的小区活跃值</th>
+                                            <th style="width: 12rem;">分红的个数</th>
+                                            <th>人数</th>
+                                            <th>总分的个数</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="res" id="ress"}
+                                        <tr>
+                                            <td>{$ress.user_group_id}</td>
+                                            <td><input type="text" value="{$ress.group_name}" class="form-control" name="group_name"/></td>
+                                            <td><input type="text" value="{$ress.group_da_huoyue}" class="form-control" name="group_da_huoyue"/></td>
+                                            <td><input type="text" value="{$ress.group_xiao_huoyue}" class="form-control" name="group_xiao_huoyue"/></td>
+                                            <td>{$ress.ge}</td>
+                                            <td>{$ress.num}</td>
+                                            <td>{$ress.all_money}</td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--Extended Table Ends-->
+        </div>
+    </div>
+    <!-- END : End Main Content-->
+</div>
+</div>
+
+{include file="common/right" /}
+
+
+<!-- BEGIN VENDOR JS-->
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN APEX JS-->
+<script src="http://img.lll1.vip/apex-assets/js/app-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/notification-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/customizer.js" type="text/javascript"></script>
+<!-- END APEX JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<!-- END PAGE LEVEL JS-->
+<script>
+    $(function(){
+        //鼠标移除自动提交内容
+        $('.table').on('change','.form-control',function ()
+        {
+            var id = $(this).parents("tr").children("td:nth-child(1)").text();
+            var val = $(this).val();
+            var name = $(this).attr('name');
+            $.ajax({
+                type: 'post',
+                url: '/sun_admin/fenhong_edit',
+                dataType: 'json',
+                data: {"id":id,"val":val,"name":name,"type":"edit"},
+                success: function(res)
+                {
+                    if(res.status == '200')
+                    {
+                        toastr.success(res.msg);
+                        // setTimeout(function () {
+                        //     window.location.reload();
+                        // }, 1800);
+                    }else{
+                        toastr.error(res.msg)
+                    }
+                },
+            });
+        })
+    })
+
+    function updata(type)
+    {
+        val = $('input[name='+type+']').val();
+        $.ajax({
+            type: 'post',
+            url: '/sun_admin/fenhong_edit_hhr',
+            dataType: 'json',
+            data: {"key":type,"val":val},
+            success: function(res){
+                // swal("Here's a message!");
+                if(res.status == '200')
+                {
+                    toastr.success(res.msg)
+                }else{
+                    toastr.error(res.msg)
+                }
+            },
+        });
+    }
+    function qian()
+    {
+        swal({
+            title: '分红',
+            text: '是否立马分红？',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0CC27E',
+            cancelButtonColor: '#FF586B',
+            confirmButtonText: '是',
+            cancelButtonText: "否"
+        }).then(function (isConfirm) {
+            // isConfirm 返回结果true和false
+            if (isConfirm) {
+                var index = layer.load(1);
+                $.ajax({
+                    type: 'post',
+                    url: '/sun_admin/fenhong_fen',
+                    dataType: 'json',
+                    data: {},
+                    success: function(res)
+                    {
+                        layer.close(index);
+                        if(res.status == '200')
+                        {
+                            swal(
+                                res.msg,
+                                '',
+                                'success'
+                            );
+                        }else{
+                            swal(
+                                res.msg,
+                                '',
+                                'error'
+                            );
+                        }
+                    },
+                });
+            }
+        }).catch(swal.noop);
+    }
+    function rizhi(type)
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: '查看升级日志',
+                maxmin: true,
+                area: ['90%', '90%'],
+                content: '/sun_admin/fenhong_log?type='+type,
+                shadeClose:true,
+            });
+        });
+    }
+</script>
+</body>
+<!-- END : Body-->
+</html>

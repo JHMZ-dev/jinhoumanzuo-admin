@@ -1,0 +1,105 @@
+{include file="common/head" /}
+<!-- BEGIN : Body-->
+<body data-col="2-columns" class=" 2-columns  layout-dark">
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<div class="wrapper">
+
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="px-3">
+                        <form class="form">
+                            <div class="row justify-content-md-center">
+                                <div class="col-md-6" style="margin-top: 35px;">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label >User Id</label>
+                                            <input type="text" readonly="readonly" class="form-control" name="id" value="{$user_id}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>上级id</label>
+                                            <input type="text" readonly="readonly" class="form-control" name="nickname" value="{$pid}" onclick="userinfo('{$pid}')">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>开通时间</label>
+                                            <input type="text" readonly="readonly" class="form-control" name="mobile" value="{$add_time}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>到期时间</label>
+                                            <input type="text" readonly="readonly" class="form-control" name="mobile" value="{$endtime}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label >级别</label>
+                                            <select id="issueinput6" name="status" class="form-control level" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+                                                    {if condition="$role == 0"}
+                                                        <option value="0" class="sed0">未开通</option>
+                                                        <option value="1" class="sed1">领地商户</option>
+                                                    {else /}
+                                                        <option value="0" class="sed0">未开通</option>
+                                                        <option value="1" class="sed1">领地商户</option>
+                                                        <option value="2" class="sed2">领商代表</option>
+                                                        <option value="3" class="sed3">领商经理</option>
+                                                        <option value="4" class="sed4">领商总监</option>
+                                                        <option value="5" class="sed5">领商大亨</option>
+                                                        <option value="6" class="sed6">领商合伙人</option>
+                                                    {/if}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-raised btn-outline-primary btn-lg mr-1 mb-1 btn-block" onclick="role('{$user_id}')">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUB__/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="__PUB__/layer/layer.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        //自动选择下拉
+        $('.sed{$role}').attr("selected",true);
+    });
+    //查看用户信息
+    function userinfo(id)
+    {
+        layer.ready(function ()
+        {
+            layer.open({
+                type: 2,
+                title: 'View user information',
+                maxmin: true,
+                area: ['80%', '80%'],
+                content: '/sun_admin/get_user_info?id='+id,
+            });
+        });
+    }
+    function role(id)
+    {
+        layer.confirm('是否确定修改?', {
+            btn: ['YES', 'NO',], //可以无限个按钮
+        }, function(index)
+        {
+            var level = $(".level").val();
+            $.ajax({
+                type: 'post',
+                url: '/sun_admin/get_user_lord',
+                dataType: 'json',
+                data: {"user_id":id,"level":level,"type":"edit"},
+                success: function(res)
+                {
+                    layer.alert(res.msg);
+                },
+            });
+        }, function(index){
+            //按钮【按钮二】的回调
+        });
+    }
+</script>

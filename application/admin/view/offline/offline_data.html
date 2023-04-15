@@ -1,0 +1,189 @@
+{include file="common/head" /}
+<!-- BEGIN : Body-->
+<body data-col="2-columns" class=" 2-columns  layout-dark">
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<div class="wrapper">
+
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="test">
+                <div class="test-content">
+                    <div class="px-3">
+                        <form class="form">
+                            <div class="row justify-content-md-center">
+                                <div class="col-md-6">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <input type="hidden" value="{$info.offline_id}" id="offline_id">
+                                            <label >名称：</label>
+                                            <div>
+                                                 {$info.name}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >图集：</label>
+                                            <div>
+                                                {volist name="info.img" id="lists"}
+                                                    <div style="">
+                                                        <img src="{$lists}" style="height:300px;" alt="">
+                                                    </div>
+                                                {/volist}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >名称：</label>
+                                            <div>
+                                                {$info.name}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >地区：</label>
+                                            <div>
+                                                {$info.address}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >地址：</label>
+                                            <div>
+                                                {$info.address_detailed}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >经度：</label>
+                                            <div>
+                                                {$info.longitude}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >纬度：</label>
+                                            <div>
+                                                {$info.latitude}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >介绍：</label>
+                                            <div>
+                                                {$info.introduction}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >入驻时间：</label>
+                                            <div>
+                                                {$info.offline_in_time}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >到期时间：</label>
+                                            <div>
+                                                {$info.offline_end_time}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >手机：</label>
+                                            <div>
+                                                {$info.mobile}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >费用：</label>
+                                            <div>
+                                                {$info.price}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >审核状态：</label>
+                                            <select name="offline_status" class="form-control" id="offline_status">
+                                                <option value="1">通过</option>
+                                                <option value="3">拒绝并退款</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label >备注：</label>
+                                            <div>
+                                                <input type="text"  class="form-control" name="offline_content" id="offline_content" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions center">
+                                            <button type="button" class="btn btn-raised btn-primary add2">
+                                                <i class="fa fa-check-square-o"></i> 提交
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUB__/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="__PUB__/layer/layer.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/sweetalert2.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/toastr.min.js" type="text/javascript"></script>
+<script src="__PUB__/layer/layer.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/sweetalert2.min.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/vendors/js/toastr.min.js" type="text/javascript"></script>
+
+
+<script src="http://img.lll1.vip/apex-assets/js/app-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/notification-sidebar.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/customizer.js" type="text/javascript"></script>
+<script src="http://img.lll1.vip/apex-assets/js/sweet-alerts.js" type="text/javascript"></script>
+
+<script>
+
+    $(".add2").click(function(){
+
+        var offline_id      = $('#offline_id').val();
+        var offline_status      = $('#offline_status').val();
+        var offline_content      = $('#offline_content').val();
+
+        if(!offline_status){
+            swal(
+                '请选择审核状态',
+                '',
+                'error'
+            );
+            return false;
+        }
+        if(offline_status == '3'){
+            if(offline_content == ''){
+                swal(
+                    '请填写驳回原因',
+                    '',
+                    'error'
+                );
+                return false;
+            }
+        }
+
+        $.ajax({
+            type: 'post',
+            url: '/sun_admin/offline_data_sub',
+            dataType: 'json',
+            data: {"offline_id":offline_id,"offline_status":offline_status,"offline_content":offline_content},
+            success: function(res){
+                if(res.status == '200')
+                {
+                    swal(
+                        res.msg,
+                        '',
+                        'success'
+                    );
+                }else{
+                    swal(
+                        res.msg,
+                        '',
+                        'error'
+                    );
+                }
+            },
+        });
+    })
+
+</script>
